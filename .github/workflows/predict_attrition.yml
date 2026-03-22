@@ -1,0 +1,51 @@
+name: Predict Attrition and Email Results
+
+on:
+  push:
+    paths:
+      - 'data/2_PAproject_2_4_machine_prediction.csv' # 이 파일이 변경/추가될 때만 Action 실행
+
+jobs:
+  predict-and-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv and dependencies
+        run: |
+          pip install uv
+          uv pip install --system pandas numpy scikit-learn
+
+      - name: Run Prediction Script
+        run: python predict_attrition.py
+
+      - name: Send Email with Results
+        uses: dawidd6/action-send-mail@v3
+        with:
+          # SMTP 서버 주소 (GitHub Secrets에서 참조)
+          server_address: ${{ secrets.MAIL_SERVER }}
+          # 포트 번호 (GitHub Secrets에서 참조)
+          server_port: ${{ secrets.MAIL_PORT }}
+          # 보안 연결 여부 (465 포트는 true, 587 포트는 false)
+          secure: ${{ secrets.MAIL_SECURE }}
+          # 이메일 전송자 계정 (GitHub Secrets에서 참조)
+          username: ${{ secrets.MAIL_USERNAME }}
+          # 이메일 앱 비밀번호 (GitHub Secrets에서 참조)
+          password: ${{ secrets.MAIL_PASSWORD }}
+          # 제목
+          subject: '[자동화 알림] 새로운 직원 이직 확률 예측 결과'
+          # 수신자 이메일 주소 (본인의 이메일)
+          to: ${{ secrets.MAIL_TO }}
+          # 송신자 표시 이름
+          from: GitHub Data Actions
+          # 본문 메시지
+          body: '새로운 2_PAproject_2_4_machine_prediction.csv 예측 데이터가 업데이트되었습니다. 결과는 첨부된 machine_results.csv 파일에서 확인해주세요.'
+          # 결과물 첨부파일
+          attachments: data/machine_results.csv

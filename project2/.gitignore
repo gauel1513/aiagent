@@ -1,12 +1,6 @@
 # 가상환경
 .venv/
 
-# 영상 파일 (용량이 크므로 Git에 포함하지 않습니다)
-data/*.mp4
-data/*.avi
-data/*.mov
-data/*.mkv
-
 # 분석 결과 파일 (Actions에서 생성되는 파일)
 data/analysis_result.txt
 

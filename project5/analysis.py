@@ -93,7 +93,7 @@ try:
 
     print("Gemini API에 비교 분석을 요청 중입니다...")
     response = client.models.generate_content(
-        model="gemini-2.0-flash", 
+        model="gemini-1.5-flash", 
         contents=prompt
     )
     

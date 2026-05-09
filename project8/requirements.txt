@@ -1,0 +1,7 @@
+google-genai
+requests
+pandas
+openpyxl
+networkx
+matplotlib
+koreanize-matplotlib

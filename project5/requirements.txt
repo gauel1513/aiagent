@@ -1,6 +1,10 @@
-google-genai
+google-genai>=0.3.0
 requests
 pandas
+numpy
 scipy
-statsmodels
+scikit-learn
 openpyxl
+networkx
+matplotlib
+koreanize-matplotlib
